@@ -1,0 +1,171 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting package metadata (current_repodata.json): ...working... done\n",
+      "Solving environment: ...working... done\n",
+      "\n",
+      "# All requested packages already installed.\n",
+      "\n",
+      "Note: you may need to restart the kernel to use updated packages.\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "conda install biopython"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "seq CATGTAGACTAG is 12 bases long\n",
+      "reverse complement is CTAGTCTACATG\n",
+      "protein translation is HVD*\n"
+     ]
+    }
+   ],
+   "source": [
+    "from Bio.Seq import Seq\n",
+    "\n",
+    "# create a sequence object\n",
+    "my_seq = Seq(\"CATGTAGACTAG\")\n",
+    "\n",
+    "# print out some details about it\n",
+    "print(\"seq %s is %i bases long\" % (my_seq, len(my_seq)))\n",
+    "print(\"reverse complement is %s\" % my_seq.reverse_complement())\n",
+    "print(\"protein translation is %s\" % my_seq.translate())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1 ACG\n",
+      "  |||\n",
+      "1 ACG\n",
+      "  Score=6\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Begin by importing pairwise2 module \n",
+    "from Bio import pairwise2\n",
+    "\n",
+    "# Then import format_alignment method Import \n",
+    "from Bio.pairwise2 import format_alignment\n",
+    "\n",
+    "# Define the two sequences that need to be aligned\n",
+    "X = \"ACGGGT\"\n",
+    "Y = \"ACG\"\n",
+    "\n",
+    "# Matching characters are given 2 points\n",
+    "# 1 point is deducted for each mismatching character\n",
+    "# 1 point is deducted when opening a gap\n",
+    "# 0.5 points are deducted when extending it\n",
+    "\n",
+    "alignments = pairwise2.align.localms(X, Y,  2, -1, -1, -0.5)\n",
+    "\n",
+    "# Use format_alignment method to format the alignments in the list\n",
+    "for a in alignments:\n",
+    "    print(format_alignment(*a))\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1 ACGGG\n",
+      "  ||  |\n",
+      "1 AC--G\n",
+      "  Score=3\n",
+      "\n",
+      "1 ACGG\n",
+      "  || |\n",
+      "1 AC-G\n",
+      "  Score=3\n",
+      "\n",
+      "1 ACG\n",
+      "  |||\n",
+      "1 ACG\n",
+      "  Score=3\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Begin by importing pairwise2 module\n",
+    "from Bio import pairwise2\n",
+    "\n",
+    "# Then import format_alignment method\n",
+    "from Bio.pairwise2 import format_alignment\n",
+    "\n",
+    "# Define two sequences to be aligned\n",
+    "X = \"ACGGGT\"\n",
+    "Y = \"ACG\"\n",
+    "\n",
+    "# Get a list of the local alignments between the two sequences ACGGGT and ACG\n",
+    "# No parameters. Identical characters have score of 1, else 0.\n",
+    "# No gap penalties.\n",
+    "alignments = pairwise2.align.localxx(X, Y)\n",
+    "\n",
+    "# Use format_alignment method to format the alignments in the list\n",
+    "for a in alignments:\n",
+    "    print(format_alignment(*a))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
